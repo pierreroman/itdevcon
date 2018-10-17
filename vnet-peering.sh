@@ -1,20 +1,20 @@
 #!/bin/bash
 
-ResourceGroup1="demo2-prep-est"
-vneteast="VirtualNetwork"
-ResourceGroup2="demo-prep-west"
-vnetwest="VirtualNetwork"
+ResourceGroupeast="ITDEVcon-demo-East"
+vneteast="VirtualNetworkeast"
+ResourceGroupwest="ITDEVCon-demo-West"
+vnetwest="VirtualNetworkWest"
 
 
 # Get the id for VNet1.
 VNet1Id=$(az network vnet show \
-  --resource-group $ResourceGroup1 \
+  --resource-group $ResourceGroupeast \
   --name $vneteast \
   --query id --out tsv)
 
 # Get the id for VNet2.
 VNet2Id=$(az network vnet show \
-  --resource-group $ResourceGroup2 \
+  --resource-group $ResourceGroupwest \
   --name $vnetwest \
   --query id \
   --out tsv)
@@ -22,7 +22,7 @@ VNet2Id=$(az network vnet show \
 # Peer VNet1 to VNet2.
 az network vnet peering create \
   --name LinkVnet1ToVnet2 \
-  --resource-group $ResourceGroup1 \
+  --resource-group $ResourceGroupeast \
   --vnet-name $vneteast \
   --remote-vnet-id $VNet2Id \
   --allow-vnet-access
@@ -30,7 +30,11 @@ az network vnet peering create \
 # Peer VNet2 to VNet1.
 az network vnet peering create \
   --name LinkVnet2ToVnet1 \
-  --resource-group $ResourceGroup2 \
+  --resource-group $ResourceGroupwest \
   --vnet-name $vnetwest \
   --remote-vnet-id $VNet1Id \
   --allow-vnet-access
+
+
+
+  ssh -p 5000 sysadmin@104.40.10.77

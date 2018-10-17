@@ -1,0 +1,5 @@
+# ssh into vm0 in ITDEVCon-Demo-East
+
+ssh -p 5001 sysadmin@itdevconeast.eastus.cloudapp.azure.com
+
+ping 10.1.1.5
